@@ -1,3 +1,4 @@
+window.globalBlocked = 0
 chrome.cookies.onChanged.addListener(function(data){
 	console.log(data)
 	try{
@@ -16,7 +17,12 @@ chrome.cookies.onChanged.addListener(function(data){
 	chrome.tabs.query({},function(tabs){
 		
 	})
+	window.globalBlocked += 1
+	chrome.tabs.query({active:true,currentWindow:true},function(tab){
+		chrome.browserAction.setBadgeText(tab.id,{text:window.globalBlocked})
 })
+})
+
 chrome.contextMenus.create({title:"Block domain",id:"bd",contexts:["all"]})
 chrome.contextMenus.onClicked.addListener(function(data,tab){
 	if(data.menuItemId !== 'bd'){return;}
