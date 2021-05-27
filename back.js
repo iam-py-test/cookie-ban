@@ -1,6 +1,15 @@
 window.globalBlocked = 0
 window.blocked = {}
+window.dosDomain = {}
 chrome.cookies.onChanged.addListener(function(data){
+	if(window.dosDomain[data.cookie.domain] === true){return;}
+	if((window.dosDomain[data.cookie.domain]||0) >= 30){
+		window.dosDomain[data.cookie.domain] = true
+		chrome.windows.create({url:"dos.html",type:"popup"})
+		throw "DOS error: " + data.cookie.domain + " was trying to crash Cookie Ban"
+		return;
+	}
+	window.dosDomain[data.cookie.domain] = 1 + (window.dosDomain[data.cookie.domain]||0)
 	console.log(data)
 	try{
 		var blockeddomains = JSON.parse((localStorage.getItem("blockeddomains")||"[]"))
