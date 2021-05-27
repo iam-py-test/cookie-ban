@@ -1,7 +1,7 @@
 {
 "name":"Cookie ban",
 "description":"Block or clear cookies on any site",
-"permissions":["<all_urls>","cookies","webNavigation","tabs","webRequest","browsingData"],
+"permissions":["<all_urls>","cookies","webNavigation","tabs","webRequest","browsingData","contextMenus"],
 "background":{
 "scripts":["back.js"]
 },
