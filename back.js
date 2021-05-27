@@ -22,7 +22,7 @@ chrome.cookies.onChanged.addListener(function(data){
 	chrome.tabs.query({},function(tabs){
 		tabs.forEach(function(tab){
 			if(new URL(tab.url).hostname === data.cookie.domain){
-			chrome.browserAction.setBadgeText({tabId:tab.id,text:window.globalBlocked.toString()})
+			chrome.browserAction.setBadgeText({tabId:tab.id,text:window.blocked[data.cookie.domain].toString()})
 			}
 		})
 	})
