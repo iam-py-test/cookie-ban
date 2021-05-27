@@ -1,10 +1,6 @@
 window.globalBlocked = 0
 window.blocked = {}
 chrome.cookies.onChanged.addListener(function(data){
-	if(typeof window.blocked[data.cookie.domain] !== "number"){
-		window.blocked[data.cookie.domain] = 0
-	}
-	window.blocked[data.cookie.domain] += 1
 	console.log(data)
 	try{
 		var blockeddomains = JSON.parse((localStorage.getItem("blockeddomains")||"[]"))
@@ -18,7 +14,11 @@ chrome.cookies.onChanged.addListener(function(data){
 		chrome.cookies.remove({url:url,name:data.cookie.name},function(){
 			console.log(chrome.runtime.lastError,url,data,data.cookie.domain)
 		})
+		if(typeof window.blocked[data.cookie.domain] !== "number"){
+		window.blocked[data.cookie.domain] = 0
 	}
+	window.blocked[data.cookie.domain] += 1
+	
 	chrome.tabs.query({},function(tabs){
 		tabs.forEach(function(tab){
 			if(new URL(tab.url).hostname === data.cookie.domain){
@@ -27,6 +27,7 @@ chrome.cookies.onChanged.addListener(function(data){
 		})
 	})
 	window.globalBlocked += 1
+	}
 	chrome.tabs.query({active:true,currentWindow:true},function(tab){
 		
 })
