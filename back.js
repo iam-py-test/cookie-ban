@@ -19,7 +19,7 @@ chrome.cookies.onChanged.addListener(function(data){
 	})
 	window.globalBlocked += 1
 	chrome.tabs.query({active:true,currentWindow:true},function(tab){
-		chrome.browserAction.setBadgeText(tab.id,{text:window.globalBlocked})
+		chrome.browserAction.setBadgeText({tabId:tab.id,text:window.globalBlocked})
 })
 })
 
