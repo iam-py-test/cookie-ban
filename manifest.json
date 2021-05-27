@@ -5,6 +5,9 @@
 "background":{
 "scripts":["back.js"]
 },
+  "browser_action":{
+    "default_title":"Cookie ban"
+  },
 "version":"1.0",
 "manifest_version":2
 }
