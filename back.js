@@ -9,7 +9,7 @@ chrome.cookies.onChanged.addListener(function(data){
 		throw "DOS error: " + data.cookie.domain + " was trying to crash Cookie Ban"
 		return;
 	}
-	window.dosDomain[data.cookie.domain] = 1 + (window.dosDomain[data.cookie.domain]||0)
+	
 	console.log(data)
 	try{
 		var blockeddomains = JSON.parse((localStorage.getItem("blockeddomains")||"[]"))
@@ -36,6 +36,7 @@ chrome.cookies.onChanged.addListener(function(data){
 		})
 	})
 	window.globalBlocked += 1
+		window.dosDomain[data.cookie.domain] = 1 + (window.dosDomain[data.cookie.domain]||0)
 	}
 	chrome.tabs.query({active:true,currentWindow:true},function(tab){
 		
